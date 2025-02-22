@@ -1,4 +1,5 @@
 import { useState } from "react";
+import cover from '../assets/cover.jpg'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const Contact = () => {
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
   return (
-    <section className="py-12 px-6 bg-gradient-to-r from-cyan-100 to-cyan-300 text-gray-900" id="contact">
+    <section className="py-5 px-6 bg-gradient-to-r from-cyan-100 to-cyan-300 text-gray-900" id="contact">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/90 shadow-lg rounded-lg p-6">
 
         <div className="p-6">
@@ -91,7 +92,7 @@ const Contact = () => {
 
         <div className="hidden md:block">
           <img 
-            src={''} 
+            src={cover} 
             alt="Contact Us" 
             className="w-full h-full object-cover rounded-lg shadow-md"
           />

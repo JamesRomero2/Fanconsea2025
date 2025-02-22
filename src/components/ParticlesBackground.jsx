@@ -4,7 +4,7 @@ import Particles from "react-tsparticles";
 
 const ParticlesBackground = () => {
   const particlesInit = useCallback(async (engine) => {
-    console.log("Initializing tsparticles...");
+    // console.log("Initializing tsparticles...");
     await loadSlim(engine); // ✅ Use `loadSlim`, avoids `checkVersion` error
   }, []);
 

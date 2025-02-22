@@ -1,63 +1,53 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import endorsement from '../assets/endorsement.png';
+import event from '../assets/event_appearance.png';
+import product from '../assets/product_licensing.png';
 
 const offerings = [
   {
     title: "Endorsements",
-    image: "/assets/logo.png", // Update with your actual image path
+    image: endorsement, // Update with actual image path
     description:
-      "Looking for that perfect celebrity ambassador to take your brand to the next level? Our endorsement services connect your brand with the right artists to deliver authentic, impactful campaigns.",
+      "Looking for that <span class='font-bold text-cyan-900'>perfect celebrity ambassador</span> to take your brand to the next level? Our endorsement services connect your brand with the right artists to deliver <span class='font-bold text-cyan-900'>authentic, impactful campaigns</span>.",
   },
   {
     title: "Event Appearances",
-    image: "/assets/logo.png",
+    image: event,
     description:
-      "Want to generate buzz? Our event appearances service connects your company with top artists for exclusive one-off events like fan meetings, product launches, or festival performances.",
+      "Want to <span class='font-bold text-cyan-900'>generate buzz</span>? Our event appearances service connects your company with <span class='font-bold text-cyan-900'>top artists</span> for exclusive one-off events like fan meetings, product launches, or festival performances.",
   },
   {
     title: "Product Licensing",
-    image: "/assets/logo.png",
+    image: product,
     description:
-      "Create products that fans will love! We partner your brand with the hottest IPs to bring exclusive, fan-favorite merchandise into the market, helping your brand tap into a highly engaged fanbase.",
+      "Create products that <span class='font-bold text-cyan-900'>fans will love</span>! We partner your brand with the hottest IPs to bring <span class='font-bold text-cyan-900'>exclusive, fan-favorite merchandise</span> into the market, helping your brand tap into a <span class='font-bold text-cyan-900'>highly engaged fanbase</span>.",
   },
 ];
 
 const Offering = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: true,
-  };
   return (
     <section className="py-12 px-6 bg-gray-100" id="offerings">
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="ml-6">
         <h2 className="text-3xl font-extrabold text-cyan-700 mb-6">Our Offerings</h2>
         <p className="text-lg text-gray-700 mb-8">
           At <span className="font-bold text-cyan-900">Fan Connection SEA</span>, we offer premium services designed to help brands engage, excite, and grow their presence through strategic partnerships with artists and influencers.
         </p>
-        
-        <Slider {...settings}>
-          {offerings.map((offer, index) => (
-            <div key={index} className="p-4">
-              <img
-                src={offer.image}
-                alt={offer.title}
-                className="w-full h-64 object-cover rounded-xl shadow-lg"
-              />
-              <h3 className="text-2xl font-bold text-cyan-800 mt-4">{offer.title}</h3>
-              <p className="text-gray-700 mt-2">{offer.description}</p>
-            </div>
-          ))}
-        </Slider>
+      </div>
+      
+      <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        {offerings.map((offer, index) => (
+          <div key={index} className="flex flex-col bg-white p-6 rounded-2xl shadow-md">
+            <img
+              src={offer.image}
+              alt={offer.title}
+              className="w-full h-64 object-cover rounded-lg shadow-lg"
+            />
+            <h3 className="text-2xl font-bold text-cyan-800 mt-4">{offer.title}</h3>
+            <p className="text-gray-700 mt-2" dangerouslySetInnerHTML={{ __html: offer.description }}></p>
+          </div>
+        ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Offering
+export default Offering;
