@@ -1,3 +1,4 @@
+import cover from '../assets/cover.jpg'
 const About = () => {
   return (
     <section
@@ -8,7 +9,7 @@ const About = () => {
       <div
         className="absolute inset-y-0 right-0 w-1/2"
         style={{
-          backgroundImage: "url('src/assets/cover.jpg')",
+          backgroundImage: `url(${cover})`,
           backgroundSize: "cover",
           backgroundPosition: "right",
         }}
