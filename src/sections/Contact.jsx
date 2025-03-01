@@ -12,9 +12,17 @@ const Contact = () => {
     formState: { errors },
   } = useForm();
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
   const [captchaToken, setCaptchaToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRecaptchaChange = (token) => {
+    setCaptchaToken(token);
+  };
+
+  const handleRecaptchaExpired = () => {
+    setCaptchaToken(null);
+  };
 
   const onSubmit = async (data) => {
     if (!captchaToken) {
@@ -22,8 +30,8 @@ const Contact = () => {
       return;
     }
 
-    setIsLoading(true); // Show loading state
-    setMessage(""); // Reset messages
+    setIsLoading(true);
+    setMessage(null);
 
     try {
       const response = await axios.post("https://your-api.com/contact", {
@@ -33,28 +41,30 @@ const Contact = () => {
 
       if (response.data.success) {
         setMessage({ text: "Message sent successfully!", type: "success" });
-        reset(); // Clear form after submission
+        reset();
         setCaptchaToken(null);
       } else {
         setMessage({ text: "Failed to send message. Try again.", type: "error" });
       }
     } catch (error) {
-      setMessage({ text: `Error sending message. ${error}`, type: "error" });
+      console.error(error);
+      setMessage({ text: "Something went wrong. Please try again later.", type: "error" });
     } finally {
-      setIsLoading(false); // Hide loading state
+      setIsLoading(false);
     }
   };
 
   return (
-    <section className="py-5 px-6 bg-gradient-to-r from-cyan-100 to-cyan-300 text-gray-900" id="contact">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/90 shadow-lg rounded-lg p-6">
-        {/* Contact Form */}
+    <section className="py-6 px-4 bg-gradient-to-r from-cyan-100 to-cyan-300 text-gray-900" id="contact">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white/90 shadow-lg rounded-lg p-6">
+        
+        {/* Contact Form Section */}
         <div className="p-6">
-          <h2 className="text-3xl font-extrabold text-cyan-700 mb-4">Contact Us</h2>
-          <p className="text-gray-700 mb-6">Have questions or inquiries? Get in touch with us today!</p>
+          <h2 className="text-3xl font-extrabold text-cyan-700 mb-4 text-center lg:text-left">Contact Us</h2>
+          <p className="text-gray-700 mb-6 text-center lg:text-left">Have questions or inquiries? Get in touch with us today!</p>
 
-          {/* Contact Info */}
-          <div className="text-left mb-6">
+          {/* Contact Information */}
+          <div className="text-center lg:text-left mb-6">
             <h3 className="text-lg font-bold text-cyan-800">Contact Information</h3>
             <p className="mt-2 text-gray-700">
               📧 Email:{" "}
@@ -66,7 +76,7 @@ const Contact = () => {
 
           {/* Success/Error Messages */}
           {message && (
-            <p className={`text-sm font-semibold ${message.type === "success" ? "text-green-600" : "text-red-500"} mb-4`}>
+            <p className={`text-center text-sm font-semibold ${message.type === "success" ? "text-green-600" : "text-red-500"} mb-4`}>
               {message.text}
             </p>
           )}
@@ -80,6 +90,7 @@ const Contact = () => {
                 type="text"
                 {...register("name", { required: "Name is required" })}
                 className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-cyan-500"
+                aria-invalid={errors.name ? "true" : "false"}
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
             </div>
@@ -91,9 +102,13 @@ const Contact = () => {
                 type="email"
                 {...register("email", {
                   required: "Email is required",
-                  pattern: { value: /^\S+@\S+\.\S+$/, message: "Invalid email address" },
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "Invalid email address",
+                  },
                 })}
                 className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-cyan-500"
+                aria-invalid={errors.email ? "true" : "false"}
               />
               {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
@@ -105,6 +120,7 @@ const Contact = () => {
                 type="text"
                 {...register("subject", { required: "Subject is required" })}
                 className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-cyan-500"
+                aria-invalid={errors.subject ? "true" : "false"}
               />
               {errors.subject && <p className="text-red-500 text-sm">{errors.subject.message}</p>}
             </div>
@@ -116,15 +132,19 @@ const Contact = () => {
                 {...register("message", { required: "Message is required" })}
                 rows="4"
                 className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-cyan-500"
+                aria-invalid={errors.message ? "true" : "false"}
               ></textarea>
               {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
             </div>
 
             {/* Google reCAPTCHA */}
-            <ReCAPTCHA
-              sitekey="YOUR_GOOGLE_RECAPTCHA_SITE_KEY"
-              onChange={(token) => setCaptchaToken(token)}
-            />
+            <div className="flex justify-center">
+              <ReCAPTCHA
+                sitekey="6LcTwOUqAAAAAO4UNcY-Qf8GQws7OIADkl9LYYUo"
+                onChange={handleRecaptchaChange}
+                onExpired={handleRecaptchaExpired}
+              />
+            </div>
 
             {/* Submit Button */}
             <button
@@ -142,7 +162,7 @@ const Contact = () => {
         </div>
 
         {/* Image Section */}
-        <div className="hidden md:block">
+        <div className="hidden lg:flex items-center justify-center">
           <img src={cover} alt="Contact Us" className="w-full h-full object-cover rounded-lg shadow-md" />
         </div>
       </div>
