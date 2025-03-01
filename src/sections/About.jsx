@@ -1,13 +1,14 @@
-import cover from '../assets/cover.jpg'
+import cover from '../assets/cover.jpg';
+
 const About = () => {
   return (
     <section
       id="about"
       className="relative py-12 px-6 text-gray-900 bg-gradient-to-r from-cyan-100 to-cyan-300"
     >
-      {/* Background Image with Gradient Overlay */}
+      {/* Background Image (Hidden on Small Screens) */}
       <div
-        className="absolute inset-y-0 right-0 w-1/2"
+        className="hidden lg:block absolute inset-y-0 right-0 w-1/2"
         style={{
           backgroundImage: `url(${cover})`,
           backgroundSize: "cover",
@@ -15,8 +16,8 @@ const About = () => {
         }}
       ></div>
 
-      {/* Content Section */}
-      <div className="relative max-w-3xl pl-6">
+      {/* Content Section (Ensures No Overlap) */}
+      <div className="relative max-w-3xl lg:w-1/2 pl-6 lg:pl-12">
         <h2 className="text-3xl font-extrabold text-cyan-700">
           What is <span className="text-cyan-900">Fan Connection SEA?</span>
         </h2>

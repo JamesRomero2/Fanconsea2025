@@ -28,6 +28,7 @@ function App() {
                 "radial-gradient(circle, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)",
             }}
           />
+          {/* Text Content */}
           <div className="text-black max-w-2xl z-10">
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-snug">
               Bridging <span className="text-[#03989E]">Talent & Passion</span> Across Southeast Asia
@@ -44,6 +45,7 @@ function App() {
               Get Started
             </Link>
             
+            {/* Social Media Icons */}
             <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6 text-black text-2xl">
               <a href="https://www.linkedin.com/company/fan-connection-sea/" target="_blank" rel="noopener noreferrer" className="hover:text-[#03989E]">
                 <FaLinkedin />
@@ -60,14 +62,17 @@ function App() {
             </div>
           </div>
 
-          {/* Hide Hero Image on Mobile, Show on Larger Screens */}
-          <img
-            src={heroImage}
-            alt="Connecting artists and brands"
-            className="hidden sm:block w-3/4 sm:w-2/3 md:w-full max-w-xs sm:max-w-md md:max-w-3xl mt-8 md:mt-0 z-10"
-          />
+          {/* Responsive Hero Image */}
+          <div className="hidden md:w-2/3 lg:w-1/2 md:flex justify-center">
+            <img
+              src={heroImage}
+              alt="Connecting artists and brands"
+              className="w-full max-w-md md:max-w-lg lg:max-w-xl mt-8 md:mt-0 z-10"
+            />
+          </div>
         </div>
       </section>
+      
       <div>
         <About />
         <Offering />
